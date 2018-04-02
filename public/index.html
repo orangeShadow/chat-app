@@ -8,16 +8,13 @@
 </head>
 <body>
     <p>Welcome to the Chat App</p>
+    <div>
+        <form onsubmit="submit(event)">
+            <p><textarea id="message" name="message"></textarea></p>
+            <p><button type="submit">Отправить</button></p>
+        </form>
+    </div>
     <script src="/socket.io/socket.io.js"></script>
-    <script type="text/javascript">
-        var socket = io();
-        socket.on('connect', () => {
-          console.log('Connected to the Server');
-        });
-
-        socket.on('disconnect', () => {
-            console.log('Disconected from server');
-        })
-    </script>
+    <script src="/js/index.js"></script>
 </body>
 </html>
