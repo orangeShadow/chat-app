@@ -5,18 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Chat - app</title>
+    <link rel="stylesheet" href="/css/styles.css"></link>
 </head>
-<body>
-    <p>Welcome to the Chat App</p>
-    <ol id="messages"></ol>
-    <div>
+<body class="chat">
+  <div class="chat__sidebar">
+      <h3>Посетители</h3>
+      <div></div>
+  </div>
+  <div class="chat__main">
+    <div class="chat__messages"><ul id="messages"></ul></div>
+    <div class="chat__footer">
         <form id="message-form">
-          <input name="message" type="text" placeholder="Message"/>
-          <button type="submit">Отправить</button>
+            <input name="message" type="text" placeholder="Message" autofocus autocomplete="off"/>
+            <button type="submit">Отправить</button>
         </form>
-        <button id="send-location">Отправить позицию</button>
+        <button id="send-location">Отправить локацию</button>
     </div>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/index.js"></script>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/lib/moment-with-locales.min.js"></script>
+  <script src="/js/index.js"></script>
 </body>
 </html>

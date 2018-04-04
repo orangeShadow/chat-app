@@ -9,18 +9,21 @@ socket.on('disconnect', function() {
 
 
 socket.on('newMessage', function(message){
-  let li = document.createElement("li");
-  li.innerHTML = `${message.from}: ${message.text}`;
+  var li = document.createElement("li");
+  moment.locale('ru');
+  var formattedTime = moment(message.createdAt).format('HH:mm');
+  li.innerHTML = `${message.from} (${formattedTime}): ${message.text}`;
   document.getElementById('messages').appendChild(li);
 });
 
 socket.on('newLocationMessage', function(message){
-  let li = document.createElement("li");
-  let a = document.createElement("a");
+  var li = document.createElement("li");
+  var a = document.createElement("a");
   a.innerHTML = 'Мое местоположение';
   a.setAttribute('target','_blank');
   a.setAttribute('href',message.url);
-  li.innerHTML = `${message.from}: `;
+  var formattedTime = moment(message.createdAt).format('HH:mm');
+  li.innerHTML = `${message.from} (${formattedTime}): `;
   li.appendChild(a);
   document.getElementById('messages').appendChild(li);
 });
@@ -32,22 +35,38 @@ socket.emit('createMessage', {
   console.log(text);
 });
 
-let submit = function(e){
+var submit = function(e){
   e.preventDefault();
-  let text = document.querySelector('input[name="message"]').value;
-  let from = 'User';
+  var button = e.target;
+  button.setAttribute('disabled','disabled');
+  var messageTextBox =  document.querySelector('input[name="message"]');
+  text = messageTextBox.value;
+  var from = 'User';
+  if (text.length===0) {
+    alert('Введите сообщение!');
+    return false;
+  }
   socket.emit('createMessage', {
     from,
     text
   }, ()=>{
+    messageTextBox.value='';
+    button.removeAttribute('disabled');
   });
 };
 
-let getLocation = function(e){
+var getLocation = function(e){
+  var button = e.target;
   if ("geolocation" in navigator) {
+    button.setAttribute('disabled','disabled');
+    button.innerHTML = 'Отпрвка локации ...';
     navigator.geolocation.getCurrentPosition(function(position){
+      button.removeAttribute('disabled',null);
+      button.innerHTML = 'Отправить локацию';
       socket.emit('createLocationMessage',{latitude:position.coords.latitude, longitude: position.coords.longitude});
     }, function(){
+      button.removeAttribute('disabled',null);
+      button.innerHTML = 'Отправить локацию';
       alert('Unable to fetch location!');
     });
   } else {
@@ -56,7 +75,7 @@ let getLocation = function(e){
 };
 
 document.getElementById('message-form').addEventListener("submit", submit);
-let locationButton  = document.getElementById('send-location');
 
+var locationButton  = document.getElementById('send-location');
 locationButton.addEventListener('click', getLocation);
 
