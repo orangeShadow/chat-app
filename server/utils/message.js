@@ -13,7 +13,7 @@ let generateLocationMessage = (from, lat, lon) => {
         from,
         url: `https://google.com/maps?q=${lat},${lon}`,
         craetedAt: moment().valueOf()
-    }
+    };
 };
 
 module.exports = {generateMessage, generateLocationMessage};

@@ -9,23 +9,23 @@ socket.on('disconnect', function() {
 
 
 socket.on('newMessage', function(message){
-  var li = document.createElement("li");
-  moment.locale('ru');
-  var formattedTime = moment(message.createdAt).format('HH:mm');
-  li.innerHTML = `${message.from} (${formattedTime}): ${message.text}`;
-  document.getElementById('messages').appendChild(li);
+  var template = document.getElementById('message-template').innerHTML;
+  var html = Mustache.render(template,{
+    from:message.from,
+    time:moment(message.createdAt).format('HH:mm'),
+    message:message.text
+  });
+  document.getElementById('messages').innerHTML+=html;
 });
 
 socket.on('newLocationMessage', function(message){
-  var li = document.createElement("li");
-  var a = document.createElement("a");
-  a.innerHTML = 'Мое местоположение';
-  a.setAttribute('target','_blank');
-  a.setAttribute('href',message.url);
-  var formattedTime = moment(message.createdAt).format('HH:mm');
-  li.innerHTML = `${message.from} (${formattedTime}): `;
-  li.appendChild(a);
-  document.getElementById('messages').appendChild(li);
+  var template = document.getElementById('location-message-template').innerHTML;
+  var html = Mustache.render(template,{
+    from:message.from,
+    time:moment(message.createdAt).format('HH:mm'),
+    url:message.url
+  });
+  document.getElementById('messages').innerHTML+=html;
 });
 
 socket.emit('createMessage', {
