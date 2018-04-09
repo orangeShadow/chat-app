@@ -1,55 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Chat - app</title>
-    <link rel="stylesheet" href="/css/styles.css"></link>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Join  | ChatApp</title>
+  <link rel="stylesheet" href="/css/styles.css"></link>
 </head>
-<body class="chat">
-  <div class="chat__sidebar">
-      <h3>Посетители</h3>
-      <div></div>
+<body class="centered-form">
+  <div class="centered-form__form">
+    <form action="/chat.html" method="GET">
+        <div class="form-field">
+            <h3>Join Chat</h3>
+        </div>
+        <div class="form-field">
+          <label>Display name</label>
+          <input type="text" name="name" autofocus/>
+        </div>
+        <div class="form-field">
+            <label>Room name</label>
+            <input type="text" name="room" />
+        </div>
+        <div class="form-field">
+            <button type="submit">Join</button>
+        </div>
+    </form>
   </div>
-  <div class="chat__main">
-    <ul id="messages" class="chat__messages"></ul>
-    <div class="chat__footer">
-        <form id="message-form">
-            <input name="message" type="text" placeholder="Message" autofocus autocomplete="off"/>
-            <button type="submit">Отправить</button>
-        </form>
-        <button id="send-location">Отправить локацию</button>
-    </div>
-  </div>
-
-  <script id="message-template" type="text/template">
-    <li class="message">
-      <div class="message__title">
-          <h4>{{from}}</h4>
-          <span>{{time}}</span>
-      </div>
-      <div class="message__body">
-        <p>{{message}}</p>
-      </div>
-    </li>
-  </script>
-
-  <script id="location-message-template" type="text/template">
-    <li class="message">
-      <div class="message__title">
-          <h4>{{from}}</h4>
-          <span>{{time}}</span>
-      </div>
-      <div class="message__body">
-        <p><a href="{{url}}" target="_blank">Мое местоположение</a></p>
-      </div>
-    </li>
-  </script>
-
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/js/lib/moment-with-locales.min.js"></script>
-  <script src="/js/lib/mustache.js"></script>
-  <script src="/js/index.js"></script>
 </body>
 </html>
