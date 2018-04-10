@@ -1,7 +1,7 @@
 {
   "name": "chat-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "Chat on socket IO",
   "main": "index.js",
   "scripts": {
     "start": "node server/server.js",
@@ -16,7 +16,10 @@
   "dependencies": {
     "express": "^4.16.3",
     "moment": "^2.22.0",
-    "socketio": "^1.0.0"
+    "npm": "^5.8.0",
+    "socketio": "^1.0.0",
+    "to": "^0.2.9",
+    "update": "^0.7.4"
   },
   "devDependencies": {
     "expect": "^22.4.3",

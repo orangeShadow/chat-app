@@ -22,14 +22,38 @@ var scrollToBottom = function() {
 };
 
 socket.on('connect', function() {
-  console.log('Connected to the Server');
+  var params = deparam(window.location.search.replace(/^\?/,''));
+
+  socket.emit('join',params, function (err) {
+    if (err) {
+      alert(err);
+      window.location.href = '/';
+    } else {
+
+    }
+  });
 });
 
 socket.on('disconnect', function() {
   console.log('Disconected from server');
 });
 
+socket.on('updateUserList', function(users){
+  //console.log('Users list', users);
+  var divUL = document.getElementById('user-list');
+  if(divUL) {
+    divUL.innerHTML='';
+  }
+  var ol = document.createElement('ol');
+  users.forEach( (item) => {
+    let li = document.createElement('li');
 
+    li.innerHTML += item;
+    ol.appendChild(li);
+  });
+
+  divUL.appendChild(ol);
+});
 socket.on('newMessage', function(message){
   var template = document.getElementById('message-template').innerHTML;
   var html = Mustache.render(template,{
@@ -51,20 +75,13 @@ socket.on('newLocationMessage', function(message){
   document.getElementById('messages').innerHTML+=html;
 });
 
-socket.emit('createMessage', {
-  from: 'Frank',
-  text: 'Hi!'
-}, (text)=>{
-  console.log(text);
-});
-
 var submit = function(e){
   e.preventDefault();
   var button = e.target;
   button.setAttribute('disabled','disabled');
   var messageTextBox =  document.querySelector('input[name="message"]');
   text = messageTextBox.value;
-  var from = 'User';
+  var from = deparam(window.location.search.replace(/^\?/,'')).name;
   if (text.length===0) {
     alert('Введите сообщение!');
     return false;
