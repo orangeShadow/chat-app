@@ -39,7 +39,6 @@ socket.on('disconnect', function() {
 });
 
 socket.on('updateUserList', function(users){
-  //console.log('Users list', users);
   var divUL = document.getElementById('user-list');
   if(divUL) {
     divUL.innerHTML='';
@@ -54,6 +53,7 @@ socket.on('updateUserList', function(users){
 
   divUL.appendChild(ol);
 });
+
 socket.on('newMessage', function(message){
   var template = document.getElementById('message-template').innerHTML;
   var html = Mustache.render(template,{
@@ -87,7 +87,6 @@ var submit = function(e){
     return false;
   }
   socket.emit('createMessage', {
-    from,
     text
   }, ()=>{
     messageTextBox.value='';
